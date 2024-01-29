@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Match Dashboard</title>
+    <link rel="stylesheet" href="live.css">
+</head>
+<body>
+    <h1>Live Match Dashboard</h1>
+    <h3>(Refresh page to check for Lockin)</h3>
+    <div id="uploadStatus"></div>
+    <div id="dashboard">
+        <div id="teamRed" class="team">
+            <h2 id="redTeamLockStatusId">Team Red</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Red Team</th>
+                        <th>Goals</th>
+                        <th>Assists</th>
+                        <th>Own Goals</th>
+                        <th>Cards</th>
+                        <th>Penalties Saved</th>
+                    </tr>
+                </thead>
+                <tbody id="playersRed">
+                    <!-- Player rows for Team Red will be appended here -->
+                </tbody>
+            </table>
+        </div>
+        <div id="teamYellow" class="team">
+            <h2 id="yellowTeamLockStatusId">Team Yellow</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Yellow Team</th>
+                        <th>Goals</th>
+                        <th>Assists</th>
+                        <th>Own Goals</th>
+                        <th>Cards</th>
+                        <th>Penalties Saved</th>
+                    </tr>
+                </thead>
+                <tbody id="playersYellow">
+                    <!-- Player rows for Team Yellow will be appended here -->
+                </tbody>
+            </table>
+        </div>
+        <div id="matchSummary">
+          <h2>SCORE:</h2>
+          <p><span id="totalScore">0 - 0</span></p>
+          <button id="saveDataButton">SAVE AND END MATCH</button>
+      </div>
+        <div id="teamBench" class="team">
+          <h2>Team Bench</h2>
+          <ul id="playersBench">
+              <!-- Player list items for Team Bench will be appended here -->
+          </ul>
+      </div>   
+    </div>
+    <div class="match-history-button-container">
+      <button class="goToMatchHistoryButton">Match History</button>
+      <br />
+      <br />
+        <button class="dashboard-button" onclick="location.href='index.html'">Back to User Dashboard</button>
+        <br />
+        <br />
+    </div>
+    <script src="live.js"></script>
+    <script>
+    </script>
+    
+</body>
+</html>

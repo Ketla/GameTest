@@ -1,0 +1,125 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+
+#matchHistory {
+  width: 30%; /* Adjusted width */
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px auto; /* Centered the div */
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+#matchHistory h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.match-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.match-item:hover {
+  background-color: #e9e9e9;
+  border-color: #bbb;
+}
+
+.match-container {
+  /* Your styles for match container */
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border: 1px solid #ddd; /* Example style */
+}
+
+.match-scoreboard {
+  /* Your styles for match scoreboard */
+  display: flex;
+}
+
+.match-team {
+  /* Your styles for team container */
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.match-team-red {
+  background-color: red;
+  color: white;
+  flex-basis: 50%;
+}
+
+.match-team-yellow {
+  background-color: yellow;
+  color: black;
+  flex-basis: 50%;
+}
+
+.match-score {
+  /* Your styles for team score */
+  font-size: 2em;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.match-team-name {
+  /* Your styles for team name */
+  font-weight: bold;
+}
+
+.match-details {
+  /* Your styles for match details section */
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.edit-match-btn, .match-info-btn {
+  /* Your styles for buttons */
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.match-dashboard-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Take full width */
+  margin-top: 20px; /* Add some space above the button */
+}
+
+.goToDashboardButton {
+  padding: 15px 30px;
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  text-decoration: none; /* In case you change it to an <a> tag */
+}
+
+.goToDashboardButton:hover {
+  background-color: #0056b3; /* Darker blue for hover */
+}

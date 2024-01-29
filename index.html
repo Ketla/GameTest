@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+    <h1>User Dashboard</h1>
+
+    <form id="userForm">
+        <input type="text" id="userName" placeholder="Name" required>
+        <button type="submit">Create User</button>
+    </form>
+
+    <h2>Users</h2>
+    <div id="userList">
+        <!-- User list will be displayed here -->
+    </div>
+    <div id="activeCount">Active Players: 0</div>
+    <div id="inactiveCount">Inactive Players: 0</div>
+
+    <br />
+
+    <select id="matchSettingsDropdown">
+      <!-- Options will be dynamically added here -->
+  </select>
+  <br />
+  <br />
+
+  <div>
+    <button id="startGameButton">Start Game</button>
+  </div>
+  <div class="match-history-button-container">
+    <button class="goToMatchHistoryButton">Match History</button>
+  </div>
+    <script src="index.js"></script>
+</body>
+</html>

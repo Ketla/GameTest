@@ -1,0 +1,101 @@
+/* Styling for the game.html page */
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 20px;
+  background-color: #f0f0f0; /* Light gray background */
+}
+
+h1 {
+  color: #333;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+/* Styling for Team Red */
+
+#teamRed {
+  background-color: #FF5733; /* Orange-red */
+  color: #FFFFFF; /* White text */
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  display: inline-block;
+  width: 45%;
+  box-sizing: border-box;
+}
+
+/* Styling for Team Yellow */
+
+#teamYellow {
+  background-color: #FFD700; /* Gold */
+  color: #333; /* Dark text */
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  display: inline-block;
+  width: 45%;
+  box-sizing: border-box;
+}
+
+/* Styling for Team Member Names */
+
+.team-member {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #fff;
+  font-size: 18px;
+}
+
+/* Styling for the Randomize Teams Button */
+
+button {
+  background-color: #5cb85c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #4cae4c;
+}
+
+#teamBench {
+  background-color: #e0e0e0; /* Gold */
+  color: #333; /* Dark text */
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  display: inline-block;
+  width: 45%;
+  box-sizing: border-box;
+}
+
+#goLiveButton {
+  background-color: #ff4d4d;  /* A bright red color */
+  color: white;               /* White text for better readability */
+  padding: 15px 30px;         /* Larger padding for a bigger button */
+  font-size: 18px;            /* Larger font size for visibility */
+  border: none;               /* No border for a cleaner look */
+  border-radius: 8px;         /* Rounded corners */
+  cursor: pointer;            /* Cursor changes to a hand symbol when hovered over */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A subtle shadow for depth */
+  text-transform: uppercase;  /* Makes the text uppercase */
+  font-weight: bold;          /* Makes the font bold */
+}
+
+#goLiveButton:hover {
+  background-color: #cc0000; /* A darker shade of red for hover effect */
+}

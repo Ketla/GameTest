@@ -1,0 +1,162 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+h1, h3 {
+  text-align: center;
+  color: #333;
+}
+
+#dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.team {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  width: 90%;
+}
+
+.team table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.team th, .team td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
+}
+
+.team th {
+  background-color: #f2f2f2;
+}
+
+/* Add a light red background for Team Red */
+#teamRed {
+  background-color: #ffe0e0; /* Light red background color */
+}
+
+/* Add a light yellow background for Team Yellow */
+#teamYellow {
+  background-color: #ffffd0; /* Light yellow background color */
+}
+
+input[type='number'] {
+  width: 100%;
+  padding: 4px;
+  box-sizing: border-box; /* Ensures the input does not overflow the cell */
+  border: none;
+  text-align: center;
+}
+
+input[type='number']:focus {
+  outline: 2px solid #0056b3;
+}
+
+#matchSummary {
+  text-align: center; /* Center align the content */
+  padding: 20px; /* Add some padding around the content */
+  margin: 20px 0; /* Add some margin above and below the match summary */
+}
+
+#matchSummary h2 {
+  margin: 0 0 10px 0; /* Add some margin below the heading */
+  font-size: 24px; /* Set the font size for the heading */
+}
+
+#matchSummary p {
+  font-size: 16px; /* Set the font size for the paragraph */
+  color: #333; /* Set a color for the paragraph text */
+}
+
+#totalScore {
+  font-size: 48px; /* Large font size for the score */
+  font-weight: bold; /* Make the score bold */
+}
+
+#saveDataButton {
+  background-color: #4CAF50; /* Green background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 15px 32px; /* Padding for size */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove underline from text */
+  display: inline-block; /* Allow setting dimensions */
+  font-size: 16px; /* Set font size */
+  margin: 4px 2px; /* Add some margin */
+  cursor: pointer; /* Change mouse cursor to pointer */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Add a shadow effect */
+  transition: all 0.3s ease 0s; /* Smooth transition for hover effect */
+}
+
+#saveDataButton:hover {
+  background-color: #45a049; /* Darker shade of green on hover */
+}
+
+.match-history-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Take full width */
+  margin-top: 20px; /* Add some space above the button */
+}
+
+.goToMatchHistoryButton {
+  padding: 15px 30px;
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  text-decoration: none; /* In case you change it to an <a> tag */
+}
+
+.goToMatchHistoryButton:hover {
+  background-color: #0056b3; /* Darker blue for hover */
+}
+
+@media (min-width: 768px) {
+  #dashboard {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+  }
+
+  .team {
+      width: calc(50% - 20px);
+  }
+
+  #matchSummary {
+      flex-basis: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team {
+      width: calc(33% - 20px);
+  }
+}
+
+.dashboard-button {
+  background-color: #9e5cb8;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
