@@ -103,6 +103,7 @@ h1 {
 
 .match-dashboard-button-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%; /* Take full width */
@@ -111,7 +112,7 @@ h1 {
 
 .goToDashboardButton {
   padding: 15px 30px;
-  background-color: #007bff; /* Blue color */
+  background-color: #9e5cb8; /* Blue color */
   color: white;
   border: none;
   border-radius: 5px;
@@ -121,5 +122,65 @@ h1 {
 }
 
 .goToDashboardButton:hover {
-  background-color: #0056b3; /* Darker blue for hover */
+  background-color: #9e5cb8; /* Darker blue for hover */
+}
+
+.match-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns children to the start of the flex container */
+}
+
+.match-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.match-players {
+  width: 100%;
+  margin-top: 10px; /* Adjust as needed for spacing */
+}
+
+.match-stats {
+  display: none; /* Hidden by default */
+  width: 100%;
+}
+
+.match-stats-expanded {
+  display: block; /* Show when expanded */
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stats-table th, .stats-table td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.stats-table th {
+  background-color: #f2f2f2;
+}
+
+.stats-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.stats-table tr:hover {
+  background-color: #e8e8e8;
+}
+
+.scoreboard-button {
+  background-color: #e4ad23;
+  color: black;
+  padding: 20px 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 22px;
 }

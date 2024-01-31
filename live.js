@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  await fetchAndUpdateTeams();
+    const statusElement = document.getElementById('uploadStatus');
+    if (statusElement) {
+        statusElement.textContent = 'Updating team info... hold on...'; // Update status message
+    }
+    await fetchAndUpdateTeams();
+    if (statusElement) {
+        statusElement.textContent = ''; // Clear the status message after updating is complete
+    }
 });
 
 async function fetchAndUpdateTeams() {
@@ -115,7 +122,7 @@ function calculateTotalScore() {
 }
 
 async function collectAndUploadMatchData() {
-    const yellowTeamLockStatusElement = document.getElementById('yellowTeamLockStatusId');
+        const yellowTeamLockStatusElement = document.getElementById('yellowTeamLockStatusId');
     const redTeamLockStatusElement = document.getElementById('redTeamLockStatusId');
 
     const isYellowTeamLocked = yellowTeamLockStatusElement && yellowTeamLockStatusElement.textContent.includes('[LOCKED]');
@@ -210,31 +217,36 @@ function collectMatchData() {
 }
 
 function collectTeamData(teamElementId) {
-  const players = [];
-  const teamElement = document.getElementById(teamElementId);
+    const players = [];
+    const teamElement = document.getElementById(teamElementId);
 
-  teamElement.querySelectorAll('tr[data-user-id]').forEach(playerRow => {
-      const playerId = playerRow.getAttribute('data-user-id');
-      const playerName = playerRow.querySelector('td').textContent.split(' (')[0];
-      const goals = parseInt(playerRow.querySelector('.goals').value) || 0;
-      const assists = parseInt(playerRow.querySelector('.assists').value) || 0;
-      const ownGoals = parseInt(playerRow.querySelector('.own-goals').value) || 0;
-      const cards = parseInt(playerRow.querySelector('.cards').value) || 0;
-      const penaltiesSaved = parseInt(playerRow.querySelector('.penalties-saved').value) || 0;
+    teamElement.querySelectorAll('tr[data-user-id]').forEach(playerRow => {
+        const playerId = playerRow.getAttribute('data-user-id');
+        const playerInfo = playerRow.querySelector('td').textContent;
+        const playerName = playerInfo.split(' (')[0];
+        const playerPosition = playerInfo.includes('(') ? playerInfo.split(' (')[1].slice(0, -1) : ''; // Extract the full position name
 
-      players.push({
-          playerId: playerId,
-          name: playerName,
-          goals: goals,
-          assists: assists,
-          ownGoals: ownGoals,
-          cards: cards,
-          penaltiesSaved: penaltiesSaved
-      });
-  });
+        const goals = parseInt(playerRow.querySelector('.goals').value) || 0;
+        const assists = parseInt(playerRow.querySelector('.assists').value) || 0;
+        const ownGoals = parseInt(playerRow.querySelector('.own-goals').value) || 0;
+        const cards = parseInt(playerRow.querySelector('.cards').value) || 0;
+        const penaltiesSaved = parseInt(playerRow.querySelector('.penalties-saved').value) || 0;
 
-  return players;
+        players.push({
+            playerId: playerId,
+            name: playerName,
+            position: playerPosition, // Include the player's position
+            goals: goals,
+            assists: assists,
+            ownGoals: ownGoals,
+            cards: cards,
+            penaltiesSaved: penaltiesSaved
+        });
+    });
+
+    return players;
 }
+
 
 function resetInputFields() {
     // Reset all input fields within the playersRed and playersYellow sections

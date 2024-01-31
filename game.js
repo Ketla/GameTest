@@ -136,12 +136,22 @@ async function updateBin(binId, data, apiKey) {
 }
 
 document.getElementById('goLiveButton').addEventListener('click', async function() {
+  const goLiveButton = document.getElementById('goLiveButton');
+  goLiveButton.textContent = 'Going live...please wait a few seconds..'; // Update button text to indicate processing
+  goLiveButton.disabled = true; // Optionally disable the button to prevent multiple clicks
+
   const { teamRed, teamYellow, teamBench } = getTeams();
   const apiKey = '$2a$10$lx.0aczVGbFUh6i4EKyM..Hu00fZbSaq528KFgAgZAxoav8D7Ddb.'; // Replace with your actual API key
 
-  await updateBin('65a7e6c71f5677401f1f48c1', { teamRed: teamRed }, apiKey); // Update teamRed bin
-  await updateBin('65a7e70adc7465401894b78a', { teamYellow: teamYellow }, apiKey); // Update teamYellow bin
-  await updateBin('65a7e72bdc7465401894b7a7', { teamBench: teamBench }, apiKey); // Update teamBench bin  
+  try {
+    await updateBin('65a7e6c71f5677401f1f48c1', { teamRed: teamRed }, apiKey); // Update teamRed bin
+    await updateBin('65a7e70adc7465401894b78a', { teamYellow: teamYellow }, apiKey); // Update teamYellow bin
+    await updateBin('65a7e72bdc7465401894b7a7', { teamBench: teamBench }, apiKey); // Update teamBench bin  
 
-  window.location.href = 'live.html'; // Navigate to live.html
+    window.location.href = 'live.html'; // Navigate to live.html
+  } catch (error) {
+    console.error('Error during live update:', error);
+    goLiveButton.textContent = 'GO LIVE'; // Revert button text if there's an error
+    goLiveButton.disabled = false; // Re-enable the button
+  }
 });
