@@ -258,7 +258,7 @@ function printHighscoreListHtml() {
   })).sort((a, b) => b.weightedScore - a.weightedScore);
 
   // Generate and insert HTML for each list
-  const highscoreHTML = generateListHTML("Highscore List (W=6, D=2, L=0)", highscoreList, 'points');
+  const highscoreHTML = generateListHTML("Points List (W=6, D=2, L=0)", highscoreList, 'points');
   const performanceScoreHTML = generateListHTML("Performance Score List", performanceScoreList, 'performanceScore');
   const weightedHighscoreHTML = generateListHTML("Weighted Highscore List (70% points - 30% performance score)", weightedHighscoreList, 'weighted');
 

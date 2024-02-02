@@ -19,3 +19,13 @@ h1 {
   width: 80%;
   text-align: left;
 }
+
+.matchhistory-button {
+  background-color: #e4ad23;
+  color: black;
+  padding: 20px 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 22px;
+}
