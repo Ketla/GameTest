@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Scoreboard</title>
+<link rel="stylesheet" href="scoreboard.css">
+</head>
+<body>
+<h1>Player Scoreboard</h1>
+<div id="scoreboard">
+  <p id="loadingMessage">Loading in Scoreboard...</p>
+</div>
+<div id="performanceScoreExplanation">
+  <h3>Performance Score Explained:</h3>
+  <table border="1">
+    <tr>
+      <th></th>
+      <th>Goalkeeper</th>
+      <th>Defender</th>
+      <th>Attacker</th>
+    </tr>
+    <tr>
+      <td>Score a Goal</td>
+      <td>5</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Assist a Goal</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Clean Sheet</td>
+      <td>4</td>
+      <td>4</td>
+      <td></td> <!-- Empty cell for attackers as it's not applicable -->
+    </tr>
+    <tr>
+      <td>Every 2 Goals Conceded</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td></td> <!-- Empty cell for attackers as it's not applicable -->
+    </tr>
+    <tr>
+      <td>Card</td>
+      <td>-2</td>
+      <td>-2</td>
+      <td>-2</td>
+    </tr>
+    <tr>
+      <td>Penalty Save</td>
+      <td>3</td>
+      <td></td> <!-- Empty cell for defenders as it's not applicable -->
+      <td></td> <!-- Empty cell for attackers as it's not applicable -->
+    </tr>
+    <tr>
+      <td>Own goal</td>
+      <td>-2</td>
+      <td>-2</td>
+      <td>-2</td>
+    </tr>
+  </table>
+</div>
+
+<script src="scoreboard.js"></script>
+</body>
+</html>
