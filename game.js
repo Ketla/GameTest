@@ -31,35 +31,36 @@ async function randomizeTeams(matchSetting) {
   try {
       const activeUsers = await fetchActiveUsersFromBin();
 
-      // Extract the number of players per team from the match setting
+      // Split users into priority and secondary based on their 'benched' value
+      let priorityUsers = activeUsers.filter(user => user.benched > 0);
+      let secondaryUsers = activeUsers.filter(user => user.benched === 0);
+
+      // Randomize both groups separately
+      priorityUsers = shuffleArray(priorityUsers);
+      secondaryUsers = shuffleArray(secondaryUsers);
+
       const maxPlayersPerTeam = parseInt(matchSetting[0]);
+      let teamRed = [], teamYellow = [], teamBench = [];
 
-      // Shuffle the activeUsers array randomly
-      const shuffledUsers = shuffleArray(activeUsers);
-
-      // Initialize empty teams, their total points, and the bench
-      const teamRed = [];
-      const teamYellow = [];
-      const teamBench = [];
-
-      // Distribute users to balance teams based on totalPoints
-      let totalPointsRed = 0, totalPointsYellow = 0;
-      shuffledUsers.forEach(user => {
-          if (teamRed.length < maxPlayersPerTeam && (totalPointsRed <= totalPointsYellow || teamYellow.length === maxPlayersPerTeam)) {
+      // Function to assign users to teams with checks for full teams
+      const assignUserToTeam = (user) => {
+          if (teamRed.length < maxPlayersPerTeam && teamRed.length <= teamYellow.length) {
               teamRed.push(user);
-              totalPointsRed += user.totalPoints;
           } else if (teamYellow.length < maxPlayersPerTeam) {
               teamYellow.push(user);
-              totalPointsYellow += user.totalPoints;
           } else {
+              // Add to bench if both teams are full, including during priority user assignment
               teamBench.push(user);
           }
-      });
+      };
 
-      // Use setTeams to update the team data
+      // Assign priority users first to ensure they get to play
+      priorityUsers.forEach(assignUserToTeam);
+
+      // Then fill the remaining spots with secondary users
+      secondaryUsers.forEach(assignUserToTeam);
+
       setTeams(teamRed, teamYellow, teamBench);
-
-      // Display the teams and the bench on the "game.html" page
       displayTeams();
   } catch (error) {
       console.error('Error randomizing teams:', error);
@@ -155,3 +156,6 @@ document.getElementById('goLiveButton').addEventListener('click', async function
     goLiveButton.disabled = false; // Re-enable the button
   }
 });
+
+
+// Gunnar, Freddy, Sami, Øyvind, Kjetil

@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Add a confirmation dialog
           if (window.confirm("Are you sure all data is correct and match is ready to save?")) {
               collectAndUploadMatchData();
+              updateBenchedPlayers();
           }
       });
   }
@@ -299,5 +300,71 @@ async function unlockTeams() {
         } catch (error) {
             console.error(`Error unlocking team with bin ID ${binId}:`, error);
         }
+    }
+}
+
+
+async function updateBenchedPlayers() {
+    const apiKey = '$2a$10$lx.0aczVGbFUh6i4EKyM..Hu00fZbSaq528KFgAgZAxoav8D7Ddb.';
+    const mainBinId = '65a69d37266cfc3fde7984aa'; // Main user database bin ID
+    const sourceBinId = '65a7e72bdc7465401894b7a7'; // Source bin ID for team bench
+
+    try {
+        // Fetch benched users from the source bin
+        const sourceResponse = await fetch(`https://api.jsonbin.io/v3/b/${sourceBinId}/latest`, {
+            method: 'GET',
+            headers: {
+                'X-Master-Key': apiKey
+            }
+        });
+
+        if (!sourceResponse.ok) {
+            throw new Error(`HTTP error! Status: ${sourceResponse.status}`);
+        }
+
+        const sourceData = await sourceResponse.json();
+        const benchedUsers = sourceData.record.teamBench || [];
+
+        // Fetch current users from the main bin
+        const mainResponse = await fetch(`https://api.jsonbin.io/v3/b/${mainBinId}/latest`, {
+            method: 'GET',
+            headers: {
+                'X-Master-Key': apiKey
+            }
+        });
+
+        if (!mainResponse.ok) {
+            throw new Error(`HTTP error! Status: ${mainResponse.status}`);
+        }
+
+        const mainData = await mainResponse.json();
+        let users = mainData.record.users;
+
+        // Increment the benched count for users who were on the bench
+        users = users.map(user => {
+            const isBenched = benchedUsers.some(bUser => bUser.id === user.id);
+            if (isBenched) {
+                user.benched += 1; // Directly increment since all users have a benched value
+            }
+            return user;
+        });
+
+        // Update the main bin with the updated users list
+        const updateResponse = await fetch(`https://api.jsonbin.io/v3/b/${mainBinId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': apiKey
+            },
+            body: JSON.stringify({ users })
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error(`HTTP error! Status: ${updateResponse.status}`);
+        }
+
+        console.log('Benched players updated successfully in the main user database.');
+    } catch (error) {
+        console.error('Error updating benched players:', error);
     }
 }
