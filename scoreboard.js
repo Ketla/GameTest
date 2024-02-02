@@ -1,8 +1,6 @@
 async function fetchAndScoreBoard() {
   const apiKey = '$2a$10$lx.0aczVGbFUh6i4EKyM..Hu00fZbSaq528KFgAgZAxoav8D7Ddb.';
   const collectionId = '65aa7e311f5677401f210fed';
-  const matchHistoryDiv = document.getElementById('matchHistory');
-  const loadingMessage = document.getElementById('loadingMessage');
 
   try {
     const listResponse = await fetch(`https://api.jsonbin.io/v3/c/${collectionId}/bins`, {
@@ -43,9 +41,6 @@ async function fetchAndScoreBoard() {
     printHighscoreList(); // Finally, this prints the highscore list
     printHighscoreListHtml()
 
-    if (loadingMessage) {
-      matchHistoryDiv.removeChild(loadingMessage);
-    }
   } catch (error) {
     console.error('Error fetching match data:', error);
   }
@@ -120,7 +115,7 @@ function calculatePlayerPerformance(scoreboardData) {
       goal: 4,
       assist: 2,
       cleanSheet: 4,
-      goalsConceded: -1,
+      goalsConceded: -1, // For every 2 goals conceded
       card: -2,
       ownGoal: -2
     },
@@ -132,44 +127,46 @@ function calculatePlayerPerformance(scoreboardData) {
     }
   };
 
-  // Helper function to calculate performance score for a player
-  const calculateScore = (player) => {
-    let score = 0;
-    let positionScoring = scoring[player.position];
+// Helper function to calculate performance score for a player
+const calculateScore = (player, teamFinalScore, opponentFinalScore) => {
+  let score = 0;
+  const positionScoring = scoring[player.position];
 
-    score += (player.goals || 0) * positionScoring.goal;
-    score += (player.assists || 0) * positionScoring.assist;
-    score -= (player.ownGoals || 0) * positionScoring.ownGoal;
-    score -= (player.cards || 0) * positionScoring.card;
+  // Add or subtract points based on the player's performance
+  score += (player.goals || 0) * positionScoring.goal;
+  score += (player.assists || 0) * positionScoring.assist;
+  score += (player.ownGoals || 0) * positionScoring.ownGoal;
+  score += (player.cards || 0) * positionScoring.card;
 
-    // Check if the player is a goalkeeper or defender
-    if (player.position === 'G' || player.position === 'D') {
-      // If the final score is 0 for the opponent, it's a clean sheet
-      const opponentScore = player.team === 'teamRed' ? scoreboardData.teams.teamYellow.finalScore : scoreboardData.teams.teamRed.finalScore;
-      if (opponentScore === 0) {
-        score += positionScoring.cleanSheet;
-      }
-
-      if (player.position === 'G') {
-        score += (player.penaltiesSaved || 0) * positionScoring.penaltySave;
-        score += Math.floor((player.goalsConceded || 0) / 2) * positionScoring.goalsConceded;
-      }
+  // Clean sheet and goals conceded logic for goalkeepers and defenders
+  if (player.position === 'G' || player.position === 'D') {
+    if (teamFinalScore === 0) { // Clean sheet applies only if no goals were conceded
+      score += positionScoring.cleanSheet;
     }
+    // Subtract points for every 2 goals conceded
+    score += Math.floor(opponentFinalScore / 2) * positionScoring.goalsConceded;
+  }
 
-    return score;
-  };
+  // Additional logic for goalkeepers
+  if (player.position === 'G') {
+    score += (player.penaltiesSaved || 0) * positionScoring.penaltySave;
+  }
 
-  // Process all players and calculate their performance score
-  const processPlayers = (players) => {
-    return players.map(player => {
-      player.performanceScore = calculateScore(player);
-      return player;
-    });
-  };
+  return score;
+};
 
-  // Calculate performance for both teams
-  scoreboardData.teams.teamRed.players = processPlayers(scoreboardData.teams.teamRed.players);
-  scoreboardData.teams.teamYellow.players = processPlayers(scoreboardData.teams.teamYellow.players);
+// Process all players and calculate their performance score
+const processPlayers = (players, teamFinalScore, opponentFinalScore) => {
+  return players.map(player => {
+    player.performanceScore = calculateScore(player, teamFinalScore, opponentFinalScore);
+    return player;
+  });
+};
+
+// Calculate performance for both teams
+scoreboardData.teams.teamRed.players = processPlayers(scoreboardData.teams.teamRed.players, scoreboardData.teams.teamRed.finalScore, scoreboardData.teams.teamYellow.finalScore);
+scoreboardData.teams.teamYellow.players = processPlayers(scoreboardData.teams.teamYellow.players, scoreboardData.teams.teamYellow.finalScore, scoreboardData.teams.teamRed.finalScore);
+
 
   // Log the performance scores for verification
   console.log('Player Performance Scores:');
@@ -185,26 +182,30 @@ function updateTotalPointsWithPerformance(scoreboardData) {
   // Update the totalPointsData with performance scores
   ['teamRed', 'teamYellow'].forEach(teamKey => {
     scoreboardData.teams[teamKey].players.forEach(player => {
+      // Ensure player.performanceScore is a number before calculations
+      player.performanceScore = Number(player.performanceScore) || 0;
+
       // If the player already exists in totalPointsData, update their performance score
       if (totalPointsData[player.playerId]) {
-        // Initialize performanceScore if it does not exist
+        // Ensure existing performanceScore is a number, initialize if not
         if (typeof totalPointsData[player.playerId].performanceScore !== 'number') {
           totalPointsData[player.playerId].performanceScore = 0;
         }
         // Accumulate the performance score
         totalPointsData[player.playerId].performanceScore += player.performanceScore;
       } else {
-        // If it's a new player, add them to totalPointsData
+        // If it's a new player, add them to totalPointsData with initialized performance score
         totalPointsData[player.playerId] = {
           playerId: player.playerId,
           name: player.name,
           points: 0, // Initialize points
-          performanceScore: player.performanceScore || 0, // Initialize performance score
+          performanceScore: player.performanceScore // Already ensured it's a number
         };
       }
     });
   });
 }
+
 
 function printHighscoreList() {
   // Original Highscore List based on total points
